@@ -1,35 +1,33 @@
 //
 const quoteTag = document.querySelector("h1")
+const authorTag = document.querySelector("p")
 const randomTag = document.querySelector("footer img")
 
-const data = [
-            { 
-                quote:  "Good deisgn is honest",
-                author : "Socrate"
-            },
-                
-            {
-                quote: "is easier  to ask forgiveness than it is to get permission ",
-                author : "Undeifined" 
-            },
-            {
-                quote: "blablabla",
-                auhtor : "unknown"
-            },
-        ]
+let data = []
+
+// Load in the real data
+fetch("quotes.json").then(function(response){
+        return response.json()
+    }).then(function (jsonData) {
+        data = jsonData
+        getQuote()
+    })
 
         
 const getQuote = function() {
-    // get a random number
-    const randomNumber = Math.floor(Math.random() * data.length)
+    if(data.length > 0){
 
-    // get a random quote 
-    const randomQuote = data[randomNumber]
+        // get a random number
+        const randomNumber = Math.floor(Math.random() * data.length)
 
-    //get a random quote and put it in the site
-    quoteTag.innerHTML = randomQuote
+        // get a random quote 
+        const randomQuote = data[randomNumber]
+
+        //get a random quote and put it in the site
+        quoteTag.innerHTML = randomQuote.quote
+        authorTag.innerHTML = randomQuote.author
+        }
     }
-
 
 //run getquote on page load
 getQuote()
